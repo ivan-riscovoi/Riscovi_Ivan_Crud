@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="UTF-8">
+  <title>Users</title>
+  <style>
+    #customers {
+      font-family: Arial, Helvetica, sans-serif;
+      border-collapse: collapse;
+      width: 100%;
+    }
+
+    #customers td, #customers th {
+      border: 1px solid #ddd;
+      padding: 8px;
+    }
+
+    #customers tr:nth-child(even){background-color: #f2f2f2;}
+
+    #customers tr:hover {background-color: #ddd;}
+
+    #customers th {
+      padding-top: 12px;
+      padding-bottom: 12px;
+      text-align: left;
+      background-color: #04AA6D;
+      color: white;
+    }
+    .c {
+      border: 1px solid #333; /* Рамка */
+      display: inline-block;
+      padding: 5px 15px; /* Поля */
+      text-decoration: none; /* Убираем подчёркивание */
+      color: white; /* Цвет текста */
+      background-color: #04AA6D;
+    }
+    .c:hover {
+      box-shadow: 0 0 5px rgba(0,0,0,0.3); /* Тень */
+      background: linear-gradient(to bottom, #fcfff4, #e9e9ce); /* Градиент */
+      color: #a00;
+    }
+  </style>
+</head>
+<body>
+<div th:switch="${users}">
+  <h2 th:case="null">No users found!</h2>
+  <div th:case="*">
+    <h2 align="center">Список студентов</h2>
+    <a href="/user-create" class="c">Добавить запись</a>
+    <p></p>
+    <table id="customers">
+      <thead>
+      <tr>
+        <th>№</th>
+        <th>Фамилия</th>
+        <th>Имя</th>
+        <th>Редактировать запиь</th>
+        <th>Удалить запись</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr th:each="user : ${users}">
+        <td th:text="${user.id}"></td>
+        <td th:text="${user.firstName}"></td>
+        <td th:text="${user.lastName}"></td>
+        <td><a th:href="@{user-update/{id}(id=${user.id})}">Редактировать</a></td>
+        <td><a th:href="@{user-delete/{id}(id=${user.id})}">Удалить</a></td>
+      <tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+</body>
+</html>
